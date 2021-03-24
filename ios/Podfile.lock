@@ -327,6 +327,8 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNSVG (12.1.0):
+    - React
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -380,6 +382,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -452,6 +455,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -494,6 +499,7 @@ SPEC CHECKSUMS:
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNReanimated: 5231286440b796e09df3bfa5c1b12b02bfe07664
+  RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
