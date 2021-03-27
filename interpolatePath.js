@@ -46,52 +46,42 @@ function pathCommandsFromString(d) {
   return commands;
 }
 
-export default function interpolatePath(path1, path2) {
+export default function interpolatePath(pathSource, pathDestination) {
   'worklet';
 
-  const commands1 = pathCommandsFromString(path1);
-  const commands2 = pathCommandsFromString(path2);
+  const commandsSource = pathCommandsFromString(pathSource);
+  const commandsDestination = pathCommandsFromString(pathDestination);
 
-  if (commands1.length !== commands2?.length) {
-    // TODO:
+  if (commandsSource.length !== commandsDestination?.length) {
+    // TODO: Make command array the same length
     return () => {
       'worklet';
       return '';
     };
   }
 
-  const foobar = [];
-  for (let i = 0; i < commands1.length; i++) {
-    foobar.push({
-      type: commands1[i].type,
-      x: commands1[i].x,
-      y: commands1[i].y,
-      dx: commands2[i].x - commands1[i].x,
-      dy: commands2[i].y - commands1[i].y,
+  const interpolator = [];
+  for (let i = 0; i < commandsSource.length; i++) {
+    interpolator.push({
+      type: commandsSource[i].type,
+      x: commandsSource[i].x,
+      y: commandsSource[i].y,
+      dx: commandsDestination[i].x - commandsSource[i].x,
+      dy: commandsDestination[i].y - commandsSource[i].y,
     });
   }
 
-  // 0 - 1
-  return (t) => {
+  // Progres: 0 - 1
+  return (progress) => {
     'worklet';
-
-    // return `M0,300 L100,${150 - 50 * t} L200,${100 + 100 * t} L300,${
-    //   200 - 100 * t
-    // } L400,${240 - 100 * t}L400,300Z`;
 
     const output = [];
 
-    for (let i = 0; i < foobar.length; i++) {
-      // output.push({
-      //   type: foobar[i].type,
-      //   x: foobar[i].x + t * foobar[i].dx,
-      //   y: foobar[i].y + t * foobar[i].dy,
-      // });
-      output.push(
-        `${foobar[i].type} ${foobar[i].x + t * foobar[i].dx} ${
-          foobar[i].y + t * foobar[i].dy
-        }`,
-      );
+    for (let i = 0; i < interpolator.length; i++) {
+      const command = interpolator[i].type;
+      const x = interpolator[i].x + progress * interpolator[i].dx;
+      const y = interpolator[i].y + progress * interpolator[i].dy;
+      output.push(`${command}${x},${y}`);
     }
 
     return output.join('');
