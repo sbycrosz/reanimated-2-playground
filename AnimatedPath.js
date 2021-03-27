@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useMemo} from 'react';
 
 import * as Svg from 'react-native-svg';
 import Animated, {
@@ -14,32 +14,36 @@ const AnimatedSvgPath = Animated.createAnimatedComponent(Svg.Path);
 
 export default function AnimatedPath({path, ...svgPathProps}) {
   const previousPath = useRef();
-  const interpolator = useRef();
   const progress = useSharedValue(0);
 
-  useEffect(() => {
+  const interpolator = useMemo(() => {
     // TODO: Handle animating to/from null-ish path
 
     if (!previousPath.current) {
       // TODO: Handle initial animation
-      previousPath.current = 'M0,300 M0,300 M0,300 M0,300 M0,300';
+      // Copy initial path but set the y to max-y ???
+      previousPath.current = 'M0,300 L100,300 L200,300 L300,300 L400,300';
     }
 
-    console.log('animating\n', previousPath.current, '\n', path);
-
-    interpolator.current = interpolatePath(previousPath.current, path);
-
-    progress.value = 1;
-    progress.value = withTiming(0, {
-      duration: 1000, // Move this to prop
-      easing: Easing.inOut(Easing.cubic),
-    });
+    let _interpolator = interpolatePath(previousPath.current, path);
 
     previousPath.current = path;
+
+    return _interpolator;
+  }, [path]);
+
+  useEffect(() => {
+    progress.value = 0;
+    progress.value = withTiming(1, {
+      // Move these to props
+      easing: Easing.inOut(Easing.cubic),
+      duration: 400,
+      delay: 100,
+    });
   }, [path, progress]);
 
   const animatedProps = useAnimatedProps(() => {
-    const animatedPath = interpolator.current?.(progress.value);
+    const animatedPath = interpolator(progress.value);
     return {d: animatedPath};
   });
 
