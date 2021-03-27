@@ -11,20 +11,20 @@ import Animated, {
 import {Button, View} from 'react-native';
 
 import React, {useState} from 'react';
-import {interpolatePath} from 'd3-interpolate-path';
-//
-// function interpolatePath(path1, path2) {
-//   'worklet';
-//
-//   // 0 - 1
-//   return (t) => {
-//     'worklet';
-//
-//     return `M0,300 L100,${150 - 50 * t} L200,${100 + 100 * t} L300,${
-//       200 - 100 * t
-//     } L400,${240 - 100 * t}L400,300Z`;
-//   };
-// }
+// import {interpolatePath} from 'd3-interpolate-path';
+
+function interpolatePath(path1, path2) {
+  'worklet';
+
+  // 0 - 1
+  return (t) => {
+    'worklet';
+
+    return `M0,300 L100,${150 - 50 * t} L200,${100 + 100 * t} L300,${
+      200 - 100 * t
+    } L400,${240 - 100 * t}L400,300Z`;
+  };
+}
 
 const PATH1 = 'M0,300 L100,100 L200,200 L300,100 L400,140';
 const PATH2 = 'M0,300 L100,150 L200,100 L300,200 L400,240';
@@ -40,10 +40,10 @@ const AnimatedSvgPath = Animated.createAnimatedComponent(Svg.Path);
 
 export default function AnimatedStyleUpdateExample(props) {
   const [progressNonAnimated, setProgressNonAnimated] = useState(0);
+
   const progress = useSharedValue(0);
 
   const animatedProps = useAnimatedProps(() => {
-    // I think this will be run on RN thread, not sure how to move it to UI thread
     const path = interpolator(progress.value);
     return {d: path};
   });
@@ -60,28 +60,12 @@ export default function AnimatedStyleUpdateExample(props) {
       </Svg.Svg>
 
       <Button
-        title="toggle-animated"
+        title="toggle-path"
         onPress={() => {
           progress.value = withTiming(progress.value ? 0 : 1, {
             duration: 1000,
             easing: Easing.inOut(Easing.cubic),
           });
-        }}
-      />
-
-      <Svg.Svg style={{borderWidth: 1}} height={300} width={400}>
-        <Svg.Path
-          d={interpolator(progressNonAnimated)}
-          animatedProps={animatedProps}
-          strokeWidth={1}
-          stroke={'#000'}
-        />
-      </Svg.Svg>
-
-      <Button
-        title="toggle-non-animated"
-        onPress={() => {
-          setProgressNonAnimated(progressNonAnimated ? 0 : 1);
         }}
       />
     </View>
