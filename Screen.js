@@ -7,9 +7,20 @@ import {Button, View} from 'react-native';
 import React, {useState} from 'react';
 import AnimatedPath from './AnimatedPath';
 
+import {
+  PATH_BASIC_1,
+  PATH_BASIC_2,
+  AREA_BASIC_1,
+  AREA_BASIC_2,
+  PATH_1M,
+  PATH_3M,
+  AREA_1M,
+  AREA_3M,
+} from './SamplePaths';
+
 export default function AnimatedStyleUpdateExample(props) {
-  const PATH1 = 'M0,300 L100,100 L200,200 L300,100 L400,140';
-  const PATH2 = 'M0,300 L100,150 L200,100 L300,200 L400,240';
+  const PATH1 = PATH_BASIC_1;
+  const PATH2 = PATH_BASIC_2;
 
   const [path, setPath] = useState(PATH1);
 
