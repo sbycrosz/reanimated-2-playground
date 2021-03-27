@@ -24,23 +24,31 @@ function interpolatePath(path1, path2) {
 }
 
 export default function AnimatedPath({path, ...svgPathProps}) {
-  const previousPath = useRef(path);
+  const previousPath = useRef();
   const interpolator = useRef();
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    // TODO: Animate initial path. from a straight line?
+    // TODO: Handle animating to/from null-ish path
+    if (!previousPath.current) {
+      // TODO: Animate initial path. from a straight line?
+      previousPath.current = 'M0,300L400,300Z';
+    }
+
     if (previousPath.current === path) {
       return;
     }
 
+    console.log(`animating \n  -  ${previousPath.current}\n  -  ${path}`);
     interpolator.current = interpolatePath(previousPath.current, path);
 
     progress.value = withTiming(progress.value ? 0 : 1, {
-      duration: 1000,
+      duration: 1000, // Move this to prop
       easing: Easing.inOut(Easing.cubic),
     });
-  }, [path]);
+
+    previousPath.current = path;
+  }, [path, progress]);
 
   const animatedProps = useAnimatedProps(() => {
     const animatedPath = interpolator.current?.(progress.value);
