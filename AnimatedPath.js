@@ -8,20 +8,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import interpolatePath from './interpolatePath';
+
 const AnimatedSvgPath = Animated.createAnimatedComponent(Svg.Path);
-
-function interpolatePath(path1, path2) {
-  'worklet';
-
-  // 0 - 1
-  return (t) => {
-    'worklet';
-
-    return `M0,300 L100,${150 - 50 * t} L200,${100 + 100 * t} L300,${
-      200 - 100 * t
-    } L400,${240 - 100 * t}L400,300Z`;
-  };
-}
 
 export default function AnimatedPath({path, ...svgPathProps}) {
   const previousPath = useRef();
@@ -30,19 +19,18 @@ export default function AnimatedPath({path, ...svgPathProps}) {
 
   useEffect(() => {
     // TODO: Handle animating to/from null-ish path
+
     if (!previousPath.current) {
-      // TODO: Animate initial path. from a straight line?
-      previousPath.current = 'M0,300L400,300Z';
+      // TODO: Handle initial animation
+      previousPath.current = 'M0,300 M0,300 M0,300 M0,300 M0,300';
     }
 
-    if (previousPath.current === path) {
-      return;
-    }
+    console.log('animating\n', previousPath.current, '\n', path);
 
-    console.log(`animating \n  -  ${previousPath.current}\n  -  ${path}`);
     interpolator.current = interpolatePath(previousPath.current, path);
 
-    progress.value = withTiming(progress.value ? 0 : 1, {
+    progress.value = 1;
+    progress.value = withTiming(0, {
       duration: 1000, // Move this to prop
       easing: Easing.inOut(Easing.cubic),
     });

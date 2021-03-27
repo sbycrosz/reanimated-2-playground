@@ -16,7 +16,11 @@ export default function AnimatedStyleUpdateExample(props) {
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       <Svg.Svg style={{borderWidth: 1}} height={300} width={400}>
-        <AnimatedPath path={path} strokeWidth={1} stroke={'#000'} fill="blue" />
+        <AnimatedPath path={path} strokeWidth={1} stroke={'#000'} />
+      </Svg.Svg>
+
+      <Svg.Svg style={{borderWidth: 1}} height={300} width={400}>
+        <Svg.Path d={path} strokeWidth={1} stroke={'#000'} />
       </Svg.Svg>
 
       <Button
