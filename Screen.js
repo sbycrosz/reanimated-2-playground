@@ -2,52 +2,45 @@
 
 import * as Svg from 'react-native-svg';
 
-import Animated, {
-  Easing,
-  useAnimatedProps,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
 import {Button, View} from 'react-native';
 
-import React from 'react';
-import {interpolatePath} from 'd3-interpolate-path';
+import React, {useState} from 'react';
+import AnimatedPath from './AnimatedPath';
 
-const PATH1 = 'M0,300 L100,100 L200,200 L300,100 L400,140';
-const PATH2 = 'M0,300 L100,150 L200,100 L300,200 L400,240';
-
-const interpolator = interpolatePath(PATH1, PATH2);
-
-const AnimatedSvgPath = Animated.createAnimatedComponent(Svg.Path);
+import {
+  PATH_BASIC_1,
+  PATH_BASIC_2,
+  AREA_BASIC_1,
+  AREA_BASIC_2,
+  PATH_1M,
+  PATH_3M,
+  AREA_1M,
+  AREA_3M,
+} from './SamplePaths';
 
 export default function AnimatedStyleUpdateExample(props) {
-  const progress = useSharedValue(0);
+  const PATH1 = PATH_BASIC_1;
+  const PATH2 = PATH_BASIC_2;
 
-  const animatedProps = useAnimatedProps(() => {
-    // I think this will be run on RN thread, not sure how to move it to UI thread
-    const path = interpolator(progress.value);
-    return {d: path};
-  });
+  const [path, setPath] = useState(PATH1);
 
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       <Svg.Svg style={{borderWidth: 1}} height={300} width={400}>
-        <AnimatedSvgPath
-          animatedProps={animatedProps}
-          strokeWidth={1}
-          stroke={'#000'}
-        />
+        <AnimatedPath path={path} strokeWidth={1} stroke={'#000'} />
+      </Svg.Svg>
+
+      <Svg.Svg style={{borderWidth: 1}} height={300} width={400}>
+        <Svg.Path d={path} strokeWidth={1} stroke={'#000'} />
       </Svg.Svg>
 
       <Button
-        title="toggle-animated"
+        title="toggle-path"
         onPress={() => {
-          progress.value = withTiming(progress.value ? 0 : 1, {
-            duration: 1000,
-            easing: Easing.inOut(Easing.cubic),
-          });
+          setPath(path === PATH1 ? PATH2 : PATH1);
         }}
       />
     </View>
   );
 }
+//
