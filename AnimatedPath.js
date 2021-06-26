@@ -8,7 +8,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import interpolatePath from './interpolatePath';
+import interpolatePath from './interpolatePath/interpolatePath';
 
 const AnimatedSvgPath = Animated.createAnimatedComponent(Svg.Path);
 
@@ -22,7 +22,7 @@ export default function AnimatedPath({path, ...svgPathProps}) {
     if (!previousPath.current) {
       // TODO: Handle initial animation
       // Copy initial path but set the y to max-y ???
-      previousPath.current = 'M0,300 L100,300 L200,300 L300,300 L400,300';
+      previousPath.current = '';
     }
 
     let _interpolator = interpolatePath(previousPath.current, path);
