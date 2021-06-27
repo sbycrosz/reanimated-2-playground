@@ -421,34 +421,45 @@ export function interpolatePathCommands(
       return aCommands;
     }
 
-    const foo = [];
     // interpolate the commands using the mutable interpolated command objs
     for (let i = 0; i < interpolatedCommands.length; ++i) {
-      // if (interpolatedCommands[i].type === 'Z') continue;
+      if (interpolatedCommands[i].type === 'Z') {
+        continue;
+      }
 
       const aCommand = aCommands[i];
       const bCommand = bCommands[i];
       const interpolatedCommand = interpolatedCommands[i];
 
-      for (var j = 0; j < typeMap[interpolatedCommand.type].length; j++) {
-        const arg = typeMap[interpolatedCommand.type][j];
-        interpolatedCommand[arg] = (1 - t) * aCommand[arg];
-        // interpolatedCommand[arg] = (1 - t) * aCommand[arg] + t * bCommand[arg];
-
-        console.log(interpolatedCommand[arg]);
-        // do not use floats for flags (#27), round to integer
-        if (arg === 'largeArcFlag' || arg === 'sweepFlag') {
-          interpolatedCommand[arg] = Math.round(interpolatedCommand[arg]);
-        }
-      }
-      foo.push(interpolatedCommand);
-
-      // if (t) {
-      //   console.log('halfway', Math.floor(t / 0.1), interpolatedCommands[i]);
-      // }
+      interpolatedCommand.type = bCommands[i].type;
+      interpolatedCommand.x = aCommands[i].x * (1 - t) + bCommands[i].x * t;
+      interpolatedCommand.y = aCommands[i].y * (1 - t) + bCommands[i].y * t;
+      // foo.push({
+      //   type: bCommands[i].type,
+      //   x: aCommands[i].x * (1 - t) + bCommands[i].x * t,
+      //   y: aCommands[i].y * (1 - t) + bCommands[i].y * t,
+      // });
     }
 
-    return foo;
+    return interpolatedCommands;
+    // // interpolate the commands using the mutable interpolated command objs
+    // for (let i = 0; i < interpolatedCommands.length; ++i) {
+    //   // if (interpolatedCommands[i].type === 'Z') continue;
+    //
+    //   const aCommand = aCommands[i];
+    //   const bCommand = bCommands[i];
+    //   const interpolatedCommand = interpolatedCommands[i];
+    //   for (var j = 0; j < typeMap[interpolatedCommand.type].length; j++) {
+    //     const arg = typeMap[interpolatedCommand.type][j];
+    //     interpolatedCommand[arg] = (1 - t) * aCommand[arg] + t * bCommand[arg];
+    //
+    //     // do not use floats for flags (#27), round to integer
+    //     if (arg === 'largeArcFlag' || arg === 'sweepFlag') {
+    //       interpolatedCommand[arg] = Math.round(interpolatedCommand[arg]);
+    //     }
+    //   }
+    // }
+    //
     // return interpolatedCommands;
   };
 }
