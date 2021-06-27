@@ -12,7 +12,11 @@ import interpolatePath from './interpolatePath/interpolatePath';
 
 const AnimatedSvgPath = Animated.createAnimatedComponent(Svg.Path);
 
-export default function AnimatedPath({path, ...svgPathProps}) {
+export default function AnimatedPath({
+  path,
+  interpolatePathArgs,
+  ...svgPathProps
+}) {
   const previousPath = useRef();
   const progress = useSharedValue(0);
 
@@ -25,12 +29,16 @@ export default function AnimatedPath({path, ...svgPathProps}) {
       previousPath.current = '';
     }
 
-    let _interpolator = interpolatePath(previousPath.current, path);
+    let _interpolator = interpolatePath(
+      previousPath.current,
+      path,
+      interpolatePathArgs.excludeSegment,
+    );
 
     previousPath.current = path;
 
     return _interpolator;
-  }, [path]);
+  }, [path, interpolatePathArgs]);
 
   useEffect(() => {
     progress.value = 0;
