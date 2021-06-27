@@ -67,100 +67,100 @@ export default [
       'M0,81L13,128L27,84L40,83L53,114L67,114L80,137L93,116L107,95L120,57L133,87L147,93L160,163L173,95L187,123L200,113L210,96L228,145L246,92L264,106L282,56L300,90',
     scale: false,
   },
-  {
-    name: 'graticule test',
-    a:
-      'M325.1483457087596,531.4452502639945L340.7606028278758,399.7423780391654L359.3445610837574,268.6082938654016L380.395962152234,138.02316901947256L403.36162136396405,7.912231358580129',
-    b:
-      'M354.49306197556837,528.5099972371023L344.61144068364655,289.8103838246071L333.8706761621328,30.357378766024',
-  },
-  {
-    name: 'line to line: len(A) = len(b)',
-    a: 'M0,0L10,10L100,100',
-    b: 'M10,10L20,20L200,200',
-  },
-  {
-    name: 'line to line: len(A) > len(b)',
-    a: 'M0,0L10,10L100,100',
-    b: 'M10,10L20,20',
-  },
-  {
-    name: 'line to line: len(A) < len(b)',
-    a: 'M0,0L10,10',
-    b: 'M10,10L20,20L200,200',
-  },
-  {
-    name: 'line to line: len(A)=1',
-    a: 'M0,0Z',
-    b: 'M10,10L20,20L200,200',
-  },
-  {
-    name: 'line to line: len(B)=1',
-    a: 'M0,0L10,10L100,100',
-    b: 'M10,10Z',
-  },
-  {
-    name: 'line to line: A is null',
-    a: null,
-    b: 'M10,10L20,20L200,200',
-  },
-  {
-    name: 'line to line: B is null',
-    a: 'M0,0L10,10L100,100',
-    b: null,
-  },
-  {
-    name: 'line to line: A is null and B is null',
-    a: null,
-    b: null,
-  },
-  {
-    name: 'where both A and B end in Z',
-    a: 'M0,0Z',
-    b: 'M10,10L20,20Z',
-  },
-  {
-    name: 'where A=null, B ends in Z',
-    a: null,
-    b: 'M10,10L20,20Z',
-  },
-  {
-    name: 'with other valid `d` characters',
-    a:
-      'M0,0m0,0L0,0l0,0H0V0Q0,0,0,0q0,0,0,0C0,0,0,0,0,0c0,0,0,0,0,0T0,0t0,0' +
-      'S0,0,0,0s0,0,0,0A0,0,0,0,0,0,0',
-    b:
-      'M4,4m4,4L4,4l4,4H4V4Q4,4,4,4q4,4,4,4C4,4,4,4,4,4c4,4,4,4,4,4T4,4t4,4' +
-      'S4,4,4,4s4,4,4,4A4,4,0,0,0,4,4',
-  },
-  {
-    name: 'converts points in A to match types in B',
-    a: 'M2,2 L3,3          C4,4,4,4,4,4 C5,5,5,5,5,5  L6,6  L7,7',
-    b: 'M4,4 C5,5,5,5,5,5  L6,6         S7,7,7,7      H8    V9',
-  },
-  {
-    name: 'curves of different length',
-    a: 'M0,0L3,3C1,1,2,2,4,4C3,3,4,4,6,6L8,0',
-    b: 'M2,2L3,3C5,5,6,6,4,4C6,6,7,7,5,5C8,8,9,9,6,6C10,10,11,11,7,7L8,8',
-  },
-  {
-    name: 'adds to the closest point',
-    a: 'M0,0L4,0L20,0',
-    b: 'M0,4L1,4L3,0L4,0L10,0L14,0L18,0',
-  },
-  {
-    name: 'handles the case where path commands are followed by a space',
-    a: 'M 0 0 L 10 10 L 100 100',
-    b: 'M10,10L20,20',
-  },
-  {
-    name: 'includes M when extending if it is the only item',
-    a: 'M0,0',
-    b: 'M10,10L20,20L30,30',
-  },
-  {
-    name: 'handles negative numbers properly',
-    a: 'M0,0L0,0',
-    b: 'M-10,-10L20,20',
-  },
+  // {
+  //   name: 'graticule test',
+  //   a:
+  //     'M325.1483457087596,531.4452502639945L340.7606028278758,399.7423780391654L359.3445610837574,268.6082938654016L380.395962152234,138.02316901947256L403.36162136396405,7.912231358580129',
+  //   b:
+  //     'M354.49306197556837,528.5099972371023L344.61144068364655,289.8103838246071L333.8706761621328,30.357378766024',
+  // },
+  // {
+  //   name: 'line to line: len(A) = len(b)',
+  //   a: 'M0,0L10,10L100,100',
+  //   b: 'M10,10L20,20L200,200',
+  // },
+  // {
+  //   name: 'line to line: len(A) > len(b)',
+  //   a: 'M0,0L10,10L100,100',
+  //   b: 'M10,10L20,20',
+  // },
+  // {
+  //   name: 'line to line: len(A) < len(b)',
+  //   a: 'M0,0L10,10',
+  //   b: 'M10,10L20,20L200,200',
+  // },
+  // {
+  //   name: 'line to line: len(A)=1',
+  //   a: 'M0,0Z',
+  //   b: 'M10,10L20,20L200,200',
+  // },
+  // {
+  //   name: 'line to line: len(B)=1',
+  //   a: 'M0,0L10,10L100,100',
+  //   b: 'M10,10Z',
+  // },
+  // {
+  //   name: 'line to line: A is null',
+  //   a: null,
+  //   b: 'M10,10L20,20L200,200',
+  // },
+  // {
+  //   name: 'line to line: B is null',
+  //   a: 'M0,0L10,10L100,100',
+  //   b: null,
+  // },
+  // {
+  //   name: 'line to line: A is null and B is null',
+  //   a: null,
+  //   b: null,
+  // },
+  // {
+  //   name: 'where both A and B end in Z',
+  //   a: 'M0,0Z',
+  //   b: 'M10,10L20,20Z',
+  // },
+  // {
+  //   name: 'where A=null, B ends in Z',
+  //   a: null,
+  //   b: 'M10,10L20,20Z',
+  // },
+  // {
+  //   name: 'with other valid `d` characters',
+  //   a:
+  //     'M0,0m0,0L0,0l0,0H0V0Q0,0,0,0q0,0,0,0C0,0,0,0,0,0c0,0,0,0,0,0T0,0t0,0' +
+  //     'S0,0,0,0s0,0,0,0A0,0,0,0,0,0,0',
+  //   b:
+  //     'M4,4m4,4L4,4l4,4H4V4Q4,4,4,4q4,4,4,4C4,4,4,4,4,4c4,4,4,4,4,4T4,4t4,4' +
+  //     'S4,4,4,4s4,4,4,4A4,4,0,0,0,4,4',
+  // },
+  // {
+  //   name: 'converts points in A to match types in B',
+  //   a: 'M2,2 L3,3          C4,4,4,4,4,4 C5,5,5,5,5,5  L6,6  L7,7',
+  //   b: 'M4,4 C5,5,5,5,5,5  L6,6         S7,7,7,7      H8    V9',
+  // },
+  // {
+  //   name: 'curves of different length',
+  //   a: 'M0,0L3,3C1,1,2,2,4,4C3,3,4,4,6,6L8,0',
+  //   b: 'M2,2L3,3C5,5,6,6,4,4C6,6,7,7,5,5C8,8,9,9,6,6C10,10,11,11,7,7L8,8',
+  // },
+  // {
+  //   name: 'adds to the closest point',
+  //   a: 'M0,0L4,0L20,0',
+  //   b: 'M0,4L1,4L3,0L4,0L10,0L14,0L18,0',
+  // },
+  // {
+  //   name: 'handles the case where path commands are followed by a space',
+  //   a: 'M 0 0 L 10 10 L 100 100',
+  //   b: 'M10,10L20,20',
+  // },
+  // {
+  //   name: 'includes M when extending if it is the only item',
+  //   a: 'M0,0',
+  //   b: 'M10,10L20,20L30,30',
+  // },
+  // {
+  //   name: 'handles negative numbers properly',
+  //   a: 'M0,0L0,0',
+  //   b: 'M-10,-10L20,20',
+  // },
 ];

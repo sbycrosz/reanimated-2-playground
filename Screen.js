@@ -9,7 +9,7 @@ import Samples from './Samples';
 
 export default function AnimatedStyleUpdateExample(props) {
   return (
-    <ScrollView style={{paddingTop: 100}}>
+    <ScrollView>
       {Samples.map((sample) => {
         return (
           <SamplePreview
