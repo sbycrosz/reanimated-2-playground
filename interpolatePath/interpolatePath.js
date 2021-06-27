@@ -418,9 +418,9 @@ export function interpolatePathCommands(
 
     // interpolate the commands using the mutable interpolated command objs
     for (let i = 0; i < aCommands.length; ++i) {
-      if (aCommands[i].type === 'Z') {
-        continue;
-      }
+      // if (aCommands[i].type === 'Z') {
+      //   continue;
+      // }
 
       const aCommand = aCommands[i];
       const bCommand = bCommands[i];
