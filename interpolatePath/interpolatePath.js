@@ -398,14 +398,7 @@ export function interpolatePathCommands(
     return convertToSameType(aCommand, bCommands[i]);
   });
 
-  // create mutable interpolated command objects
-  const interpolatedCommands = aCommands.map((aCommand) => {
-    'worklet';
-    return {...aCommand};
-  });
-
   if (addZ) {
-    interpolatedCommands.push({type: 'Z'});
     aCommands.push({type: 'Z'}); // required for when returning at t == 0
   }
 
@@ -421,46 +414,34 @@ export function interpolatePathCommands(
       return aCommands;
     }
 
+    const interpolatedCommands = [];
+
     // interpolate the commands using the mutable interpolated command objs
-    for (let i = 0; i < interpolatedCommands.length; ++i) {
-      if (interpolatedCommands[i].type === 'Z') {
+    for (let i = 0; i < aCommands.length; ++i) {
+      if (aCommands[i].type === 'Z') {
         continue;
       }
 
       const aCommand = aCommands[i];
       const bCommand = bCommands[i];
-      const interpolatedCommand = interpolatedCommands[i];
+      const interpolatedCommand = {
+        type: aCommand.type,
+      };
 
-      interpolatedCommand.type = bCommands[i].type;
-      interpolatedCommand.x = aCommands[i].x * (1 - t) + bCommands[i].x * t;
-      interpolatedCommand.y = aCommands[i].y * (1 - t) + bCommands[i].y * t;
-      // foo.push({
-      //   type: bCommands[i].type,
-      //   x: aCommands[i].x * (1 - t) + bCommands[i].x * t,
-      //   y: aCommands[i].y * (1 - t) + bCommands[i].y * t,
-      // });
+      for (let j = 0; j < typeMap[interpolatedCommand.type].length; j++) {
+        const arg = typeMap[interpolatedCommand.type][j];
+        interpolatedCommand[arg] = (1 - t) * aCommand[arg] + t * bCommand[arg];
+
+        // do not use floats for flags (#27), round to integer
+        if (arg === 'largeArcFlag' || arg === 'sweepFlag') {
+          interpolatedCommand[arg] = Math.round(interpolatedCommand[arg]);
+        }
+      }
+
+      interpolatedCommands.push(interpolatedCommand);
     }
 
     return interpolatedCommands;
-    // // interpolate the commands using the mutable interpolated command objs
-    // for (let i = 0; i < interpolatedCommands.length; ++i) {
-    //   // if (interpolatedCommands[i].type === 'Z') continue;
-    //
-    //   const aCommand = aCommands[i];
-    //   const bCommand = bCommands[i];
-    //   const interpolatedCommand = interpolatedCommands[i];
-    //   for (var j = 0; j < typeMap[interpolatedCommand.type].length; j++) {
-    //     const arg = typeMap[interpolatedCommand.type][j];
-    //     interpolatedCommand[arg] = (1 - t) * aCommand[arg] + t * bCommand[arg];
-    //
-    //     // do not use floats for flags (#27), round to integer
-    //     if (arg === 'largeArcFlag' || arg === 'sweepFlag') {
-    //       interpolatedCommand[arg] = Math.round(interpolatedCommand[arg]);
-    //     }
-    //   }
-    // }
-    //
-    // return interpolatedCommands;
   };
 }
 
