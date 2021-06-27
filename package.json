@@ -11,6 +11,7 @@
     "web": "expo start --web || expo start --web --web-only"
   },
   "dependencies": {
+    "d3-interpolate-path": "https://github.com/sbycrosz/d3-interpolate-path.git#feat/react-native-reanimated-support",
     "expo-asset": "^8.2.0",
     "jsc-android": "^250230.2.1",
     "react": "16.13.1",
@@ -18,6 +19,7 @@
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-reanimated": "2.2.0",
+    "react-native-svg": "^12.1.1",
     "react-native-web": "^0.15.5"
   },
   "devDependencies": {
